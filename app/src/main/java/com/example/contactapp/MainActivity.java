@@ -1,10 +1,18 @@
 package com.example.contactapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.Manifest;
+import android.content.ContentResolver;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
@@ -23,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         history = findViewById(R.id.history);
         contacts = findViewById(R.id.contact);
         favorite = findViewById(R.id.favorite);
-
+        permission();
         FragmentManager fm = getSupportFragmentManager();
         adapter = new pageAdapter(fm, getLifecycle());
         viewPager2.setAdapter(adapter);
@@ -51,5 +59,18 @@ public class MainActivity extends AppCompatActivity {
                 tabLayout.selectTab(tabLayout.getTabAt(position));
             }
         });
+    }
+
+    private void permission() {
+        if (ContextCompat.checkSelfPermission(this,Manifest.permission.READ_CONTACTS)
+                != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.READ_CONTACTS},0);
+        }
+
+        if (ContextCompat.checkSelfPermission(this,Manifest.permission.WRITE_CONTACTS)
+                != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.WRITE_CONTACTS},0);
+        }
+
     }
 }

@@ -6,11 +6,10 @@
     tools:context=".historyFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="call history"
-        android:textStyle="bold"
-        android:gravity="center"/>
+        android:id="@+id/historyListView"
+        />
 
 </FrameLayout>
