@@ -7,9 +7,33 @@
 
     <!-- TODO: Update blank fragment layout -->
 
+    <Button
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ic_baseline_add_ic_call_24"
+        android:id="@+id/addContact"
+        />
+    <Button
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ic_baseline_search_24"
+        android:layout_marginLeft="355dp"
+        android:id="@+id/search"
+        />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="55dp"
+        android:hint="search view"
+        android:paddingRight="195dp"
+        android:id="@+id/searchText"
+        />
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/listofcontacts"/>
+        android:id="@+id/listofcontacts"
+        android:layout_marginTop="50dp"
+        />
 </FrameLayout>

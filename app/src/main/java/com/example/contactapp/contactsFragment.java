@@ -11,6 +11,7 @@ import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -38,6 +39,7 @@ public class contactsFragment extends Fragment {
     private String mParam2;
     RecyclerView recyclerView;
     ArrayList<dataModelOfContact> contactList;
+    Button call;
 
     public contactsFragment() {
         // Required empty public constructor
@@ -82,6 +84,13 @@ public class contactsFragment extends Fragment {
         recyclerView = view.findViewById(R.id.listofcontacts);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         contactList = new ArrayList<>();
+//        call = view.findViewById(R.id.callButton);
+//        call.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        });
 
         ContentResolver contentResolver = getContext().getContentResolver();
         Uri uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
@@ -98,7 +107,8 @@ public class contactsFragment extends Fragment {
             }
         }
         Collections.sort(contactList, new NameSorter());
-        recyclerView.setAdapter(new customAdapterOfContacts(contactList));
+
+        recyclerView.setAdapter(new customAdapterOfContacts(contactList,getActivity().getApplicationContext()));
 
         return  view;
     }

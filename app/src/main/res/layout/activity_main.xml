@@ -24,9 +24,11 @@
                 android:text="Contact App"
                 android:textColor="@color/white"
                 android:textSize="20sp"
-                android:textStyle="bold">
+                android:textStyle="bold"
+                android:id="@+id/contactViewText">
 
             </TextView>
+
         </RelativeLayout>
     </androidx.appcompat.widget.Toolbar>
     <com.google.android.material.tabs.TabLayout

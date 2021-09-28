@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     TabLayout tabLayout;
     pageAdapter adapter;
     TabItem history,contacts,favorite;
+    String[] permissions;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,7 +32,14 @@ public class MainActivity extends AppCompatActivity {
         history = findViewById(R.id.history);
         contacts = findViewById(R.id.contact);
         favorite = findViewById(R.id.favorite);
+        // assign permission
+        permissions = new String[]{
+                Manifest.permission.CALL_PHONE,
+                Manifest.permission.READ_CONTACTS,
+                Manifest.permission.WRITE_CONTACTS
+        };
         permission();
+
         FragmentManager fm = getSupportFragmentManager();
         adapter = new pageAdapter(fm, getLifecycle());
         viewPager2.setAdapter(adapter);
@@ -62,15 +70,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void permission() {
-        if (ContextCompat.checkSelfPermission(this,Manifest.permission.READ_CONTACTS)
-                != PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.READ_CONTACTS},0);
+        if (permissions!=null) {
+            for (String permission: permissions) {
+                if (ActivityCompat.checkSelfPermission(this,permission)!=PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(this, permissions, 1);
+                }
+            }
         }
-
-        if (ContextCompat.checkSelfPermission(this,Manifest.permission.WRITE_CONTACTS)
-                != PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.WRITE_CONTACTS},0);
-        }
-
     }
+
 }
