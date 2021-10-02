@@ -8,10 +8,13 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -39,8 +42,9 @@ public class contactsFragment extends Fragment {
     private String mParam2;
     RecyclerView recyclerView;
     ArrayList<dataModelOfContact> contactList;
-    Button call;
-
+    EditText editText;
+    customAdapterOfContacts adapterOfContacts;
+    ArrayList<dataModelOfContact> filteredList =new ArrayList<>();
     public contactsFragment() {
         // Required empty public constructor
     }
@@ -76,6 +80,7 @@ public class contactsFragment extends Fragment {
 
 
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -84,18 +89,14 @@ public class contactsFragment extends Fragment {
         recyclerView = view.findViewById(R.id.listofcontacts);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         contactList = new ArrayList<>();
-//        call = view.findViewById(R.id.callButton);
-//        call.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//            }
-//        });
+        // filter list
+        filteredList= new ArrayList<>();
+        editText = view.findViewById(R.id.searchText);
 
         ContentResolver contentResolver = getContext().getContentResolver();
         Uri uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
         Cursor cursor = contentResolver.query(uri, null, null, null, null);
-
+        // contacts reading
         if (cursor.getCount()>0)
         {
             while (cursor.moveToNext())
@@ -107,10 +108,44 @@ public class contactsFragment extends Fragment {
             }
         }
         Collections.sort(contactList, new NameSorter());
+        // implement searching with text listener
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                filteredList.clear();
+                if (s.toString().isEmpty()){
+                    recyclerView.setAdapter(new customAdapterOfContacts(contactList,getActivity().getApplicationContext()));
+                }
+                else{
+                    filter(s.toString());
+                }
+
+            }
+        });
         recyclerView.setAdapter(new customAdapterOfContacts(contactList,getActivity().getApplicationContext()));
 
         return  view;
+    }
+
+    private void filter(String text) {
+        for (dataModelOfContact item:contactList)
+        {
+            if (item.getName().toLowerCase().contains(text.toLowerCase())){
+                filteredList.add(item);
+
+            }
+        }
+        recyclerView.setAdapter(new customAdapterOfContacts(filteredList,getActivity().getApplicationContext()));
     }
 
 

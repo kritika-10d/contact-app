@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -51,11 +52,17 @@ public class customAdapterOfContacts extends RecyclerView.Adapter<customAdapterO
         return datahoder.size();
     }
 
+    public  void filterList(ArrayList<dataModelOfContact> filteredList){
+        datahoder = filteredList;
+        notifyDataSetChanged();
+    }
+
     class myViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
     {
         ImageView img;
         TextView name,number;
         Button call;
+        EditText editText;
 
         public myViewHolder(@NonNull View itemView) {
             super(itemView);
