@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -70,6 +71,7 @@ public class customAdapterOfContacts extends RecyclerView.Adapter<customAdapterO
             name = itemView.findViewById(R.id.contact_name);
             number = itemView.findViewById(R.id.contact_number);
             call = itemView.findViewById(R.id.callButton);
+
             call.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

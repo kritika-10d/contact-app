@@ -1,12 +1,26 @@
 package com.example.contactapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.media.AudioAttributesCompat;
 
+import android.Manifest;
 import android.app.Activity;
+import android.content.ContentProviderOperation;
+import android.content.ContentResolver;
+import android.content.ContentUris;
+import android.content.ContentValues;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.RemoteException;
+import android.provider.ContactsContract;
+import android.provider.SyncStateContract;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -38,6 +52,13 @@ public class displayContactDetails extends AppCompatActivity {
             public void onClick(View v) {
                 phoneCall obj=new phoneCall(setNumber,getApplicationContext());
                 obj.calling();
+            }
+        });
+
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(),"work in the processing",Toast.LENGTH_SHORT).show();
             }
         });
 

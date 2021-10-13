@@ -3,6 +3,7 @@ package com.example.contactapp;
 import android.Manifest;
 import android.app.Application;
 import android.content.ContentResolver;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
@@ -15,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -45,6 +47,7 @@ public class contactsFragment extends Fragment {
     EditText editText;
     customAdapterOfContacts adapterOfContacts;
     ArrayList<dataModelOfContact> filteredList =new ArrayList<>();
+    Button addButton;
     public contactsFragment() {
         // Required empty public constructor
     }
@@ -75,7 +78,6 @@ public class contactsFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-
     }
 
 
@@ -90,8 +92,20 @@ public class contactsFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         contactList = new ArrayList<>();
         // filter list
-        filteredList= new ArrayList<>();
+        //filteredList= new ArrayList<>();
         editText = view.findViewById(R.id.searchText);
+        addButton = view.findViewById(R.id.addContact);
+        // add contact using intent
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               // Toast.makeText(getActivity(),"hello guys",Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(Intent.ACTION_INSERT);
+                intent.setType(ContactsContract.RawContacts.CONTENT_TYPE);
+                startActivity(intent);
+            }
+        });
+
 
         ContentResolver contentResolver = getContext().getContentResolver();
         Uri uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
@@ -101,7 +115,7 @@ public class contactsFragment extends Fragment {
         {
             while (cursor.moveToNext())
             {
-                //int img = cursor.getInt(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.));
+                //int img = cursor.getInt(cursor.getColumnIndex(ContactsContract.CommonDataKinds.));
                 String name = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
                 String number = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
                 contactList.add(new dataModelOfContact(0,name,number));
@@ -120,6 +134,7 @@ public class contactsFragment extends Fragment {
 
             }
 
+
             @Override
             public void afterTextChanged(Editable s) {
                 filteredList.clear();
@@ -132,6 +147,7 @@ public class contactsFragment extends Fragment {
 
             }
         });
+
         recyclerView.setAdapter(new customAdapterOfContacts(contactList,getActivity().getApplicationContext()));
 
         return  view;
