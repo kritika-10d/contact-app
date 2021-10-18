@@ -12,6 +12,13 @@
         <entry key="..\:/Users/HP/AndroidStudioProjects/contact-apps/app/src/main/res/layout/item_call.xml" value="0.2" />
         <entry key="..\:/Users/HP/AndroidStudioProjects/contact-apps/app/src/main/res/layout/item_fav.xml" value="0.11979166666666667" />
         <entry key="..\:/Users/HP/AndroidStudioProjects/contact-apps/app/src/main/res/layout/single_row_contact.xml" value="0.12708333333333333" />
+        <entry key="..\:/Users/HP/contact-app/app/src/main/res/layout/activity_display_contact_details.xml" value="0.1796875" />
+        <entry key="..\:/Users/HP/contact-app/app/src/main/res/layout/activity_login.xml" value="0.1796875" />
+        <entry key="..\:/Users/HP/contact-app/app/src/main/res/layout/activity_register.xml" value="0.1796875" />
+        <entry key="..\:/Users/HP/contact-app/app/src/main/res/layout/content_register.xml" value="0.1796875" />
+        <entry key="..\:/Users/HP/contact-app/app/src/main/res/layout/fragment_first.xml" value="0.14666666666666667" />
+        <entry key="..\:/Users/HP/contact-app/app/src/main/res/layout/fragment_second.xml" value="0.16666666666666666" />
+        <entry key="..\:/Users/HP/contact-app/app/src/main/res/layout/register.xml" value="0.1796875" />
       </map>
     </option>
   </component>
