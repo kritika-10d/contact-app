@@ -21,8 +21,8 @@ import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 
 public class MainActivity extends AppCompatActivity {
-    ViewPager2 viewPager2;
-    TabLayout tabLayout;
+    private ViewPager2 viewPager2;
+    private TabLayout tabLayout;
     pageAdapter adapter;
     TabItem history,contacts,favorite;
     String[] permissions;
