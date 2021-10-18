@@ -1,12 +1,23 @@
 package com.example.contactapp;
 
+import android.database.Cursor;
 import android.os.Bundle;
 
-import androidx.fragment.app.Fragment;
 
+import android.provider.CallLog;
+import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -19,6 +30,8 @@ public class historyFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private View v;
+    private RecyclerView recyclerView;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -59,6 +72,40 @@ public class historyFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_history, container, false);
+        v= inflater.inflate(R.layout.fragment_history, container, false);
+        recyclerView = v.findViewById(R.id.history_list);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        customAdapterOfCallHistory adapter= new customAdapterOfCallHistory(getCallLogs(),getContext());
+        recyclerView.setAdapter(adapter);
+
+        return v;
+    }
+
+    private ArrayList<ModelCalls> getCallLogs(){
+
+        ArrayList<ModelCalls> list = new ArrayList<>();
+        Cursor cursor =getContext().getContentResolver().query(CallLog.Calls.CONTENT_URI,null,null
+        ,null,CallLog.Calls.DATE);
+
+        int number = cursor.getColumnIndex(CallLog.Calls.NUMBER);
+        int duration = cursor.getColumnIndex(CallLog.Calls.DURATION);
+        int date_idx = cursor.getColumnIndex(CallLog.Calls.DATE);
+
+        cursor.moveToFirst();
+        while (cursor.moveToNext()){
+
+            Date date = new Date(Long.valueOf(cursor.getString(date_idx)));
+
+            String mnth_date,week_day,month,day;
+            mnth_date= (String) DateFormat.format("dd",date);
+            week_day= (String) DateFormat.format("EEEE",date);
+            month= (String) DateFormat.format("MMM",date);
+
+                    list.add(new ModelCalls(cursor.getString(number),cursor.getString(duration),
+                    week_day +" "+ mnth_date +" " + month));
+            Log.d("MiC:: ",cursor.getString(number));
+        }
+        return list;
     }
 }
