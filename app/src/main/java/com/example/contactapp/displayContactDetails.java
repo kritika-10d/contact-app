@@ -55,13 +55,31 @@ public class displayContactDetails extends AppCompatActivity {
             }
         });
 
-        delete.setOnClickListener(new View.OnClickListener() {
+delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getApplicationContext(),"work in the processing",Toast.LENGTH_SHORT).show();
+
+                ContentResolver cr = getContentResolver();
+                String where = ContactsContract.Data.DISPLAY_NAME + " = ? ";
+                String[] params = new String[] {setName};
+
+                ArrayList<ContentProviderOperation> ops = new ArrayList<ContentProviderOperation>();
+                ops.add(ContentProviderOperation.newDelete(ContactsContract.RawContacts.CONTENT_URI)
+                        .withSelection(where, params)
+                        .build());
+                try {
+                    cr.applyBatch(ContactsContract.AUTHORITY, ops);
+                } catch (RemoteException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+                catch (OperationApplicationException e) {
+                    e.printStackTrace();
+                }
+
             }
         });
-
 
     }
 }
