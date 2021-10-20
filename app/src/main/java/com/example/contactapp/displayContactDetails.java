@@ -14,6 +14,7 @@ import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.OperationApplicationException;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
@@ -55,10 +56,20 @@ public class displayContactDetails extends AppCompatActivity {
             }
         });
 
-delete.setOnClickListener(new View.OnClickListener() {
+        addFav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(),"work in the processing",Toast.LENGTH_SHORT).show();
+
+                favVariable db = new favVariable(getApplicationContext());
+                db.insertRecord(setName,setNumber);
+                Toast.makeText(getApplicationContext(),"add in fav ",Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(),"deleting",Toast.LENGTH_SHORT).show();
 
                 ContentResolver cr = getContentResolver();
                 String where = ContactsContract.Data.DISPLAY_NAME + " = ? ";
@@ -78,8 +89,11 @@ delete.setOnClickListener(new View.OnClickListener() {
                     e.printStackTrace();
                 }
 
+                finish();
+
             }
         });
+
 
     }
 }

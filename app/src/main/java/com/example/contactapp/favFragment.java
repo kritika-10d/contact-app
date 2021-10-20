@@ -1,16 +1,17 @@
+
 package com.example.contactapp;
 
-import android.os.Bundle;
+        import android.os.Bundle;
 
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+        import androidx.fragment.app.Fragment;
+        import androidx.recyclerview.widget.LinearLayoutManager;
+        import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+        import android.view.LayoutInflater;
+        import android.view.View;
+        import android.view.ViewGroup;
 
-import java.util.ArrayList;
+        import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -70,20 +71,16 @@ public class favFragment extends Fragment {
         recyclerView = view.findViewById(R.id.FavList);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         FavList = new ArrayList<>();
-        // fav name and number
-//        if(getArguments()!=null) {
-//            Bundle bundle = getArguments();
-//            //favImage = = Later
-//            favName = bundle.getString("addfavname");
-//            favNumber = bundle.getString("addfavnumber");
-//            FavList.add(new dataModelOfContact(0, favName, favNumber));
-//        }
+        //FavList.add(new dataModelOfContact(0,"Ambulance","108"));
 
+        favVariable db = new favVariable(getContext());
+        FavList=db.getAllRecords();
         FavList.add(new dataModelOfContact(0,"Ambulance","108"));
-
-
         recyclerView.setAdapter(new customAdapterOfFavFragment(FavList));
+
         return view;
 
     }
+
+
 }
